@@ -7,10 +7,12 @@
 //
 
 import SwiftUI
+import Pages
 
 struct ContentView: View {
+    @State var index: Int = 0
     var body: some View {
-        
+        NavigationView{
         ZStack {
             Rectangle().foregroundColor(Color(#colorLiteral(red: 0.8937863708, green: 0.9039856791, blue: 0.9527032971, alpha: 1))).edgesIgnoringSafeArea(.all)
             Rectangle().foregroundColor(Color.white).rotationEffect(Angle(degrees: 76) )
@@ -18,19 +20,15 @@ struct ContentView: View {
                 Image("logo")
             
             // introduction of the app scroll view
-            ScrollView(.horizontal, showsIndicators: false) {
-                
-                HStack{
-                    
-                    // TODO: change image to the screenshot of this app
-                    Image("projects-page")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                    Image("projects-page")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                }
+            
+            Pages(currentPage: $index, navigationOrientation: .horizontal, transitionStyle: .scroll, bounce: true, wrap: false, hasControl: true, controlAlignment: .bottom) { () -> [AnyView] in
+                Image("projects-page")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                Image("projects-page")
+                    .resizable()
             }.frame(height: 300)
+
             
             // Title
             VStack {
@@ -42,11 +40,13 @@ struct ContentView: View {
             }.padding()
             
             // Log in button to the login view
-            Button(action: {
-                // TODO: direct to login view
-            }) {
+            NavigationLink(destination: LoginView()) {
+                
+                
                 DesignedButton(buttonText: "Login")
+                
             }
+           
             
         
             
@@ -54,6 +54,7 @@ struct ContentView: View {
             .edgesIgnoringSafeArea(.all)
             
             
+        }
         }
     }
 }
