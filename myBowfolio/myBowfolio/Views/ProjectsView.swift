@@ -9,16 +9,20 @@
 import SwiftUI
 
 struct ProjectsView: View {
+    
+    @ObservedObject private var viewModel = ProjectsViewModel()
     var body: some View {
+        ScrollView {
         VStack {
-            Text("Hello")
             
-            
-
-            
+            ForEach(viewModel.projects, id: \.self) { project in
+                ProjectCard(project: project)
+            }
         }.frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color(#colorLiteral(red: 0.8996906877, green: 0.9598360658, blue: 0.9883870482, alpha: 1)))
             .edgesIgnoringSafeArea(.all)
+    }.onAppear() {
+        self.viewModel.fetchData()
+    }
     }
 }
 

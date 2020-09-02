@@ -8,9 +8,20 @@
 
 import Foundation
 import SwiftUI
+import FirebaseFirestoreSwift
 
-struct Project: Codable {
+struct Project: Codable, Hashable, Identifiable {
+    
+    @DocumentID var id: String? = UUID().uuidString
     var name: String
     var homepage: String
     var description: String
+    var interests: [String]
+    
+    enum CodingKeys: String, CodingKey {
+        case name
+        case homepage
+        case description
+        case interests
+    }
 }

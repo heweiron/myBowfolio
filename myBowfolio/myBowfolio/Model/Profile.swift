@@ -8,8 +8,11 @@
 
 import Foundation
 import SwiftUI
+import FirebaseFirestoreSwift
 
-struct Profile: Codable {
+struct Profile: Codable, Hashable {
+    
+    @DocumentID var id: String? = UUID().uuidString
     
     var firstName: String
     var lastName: String
@@ -17,4 +20,15 @@ struct Profile: Codable {
     var bio: String
     var title: String
     var projects: [String]
+    var interests: [String]
+    
+    enum CodingKeys: String, CodingKey {
+        case firstName
+        case lastName
+        case email
+        case bio
+        case title
+        case projects
+        case interests
+    }
 }

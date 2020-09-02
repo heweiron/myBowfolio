@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>872300651002-7uf8no2jr3h24llcqrffbvmu5vagq09r.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.872300651002-7uf8no2jr3h24llcqrffbvmu5vagq09r</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCBwhdcHxvD0Hzk_7h8dyCjpMFOt3Xx9rU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>872300651002</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>yinkron.myBowfolio</string>
+	<key>PROJECT_ID</key>
+	<string>mybowfolios-ab6d1</string>
+	<key>STORAGE_BUCKET</key>
+	<string>mybowfolios-ab6d1.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:872300651002:ios:b949a5686d91455fbf8443</string>
+	<key>DATABASE_URL</key>
+	<string>https://mybowfolios-ab6d1.firebaseio.com</string>
+</dict>
+</plist>

@@ -9,11 +9,11 @@
 import Foundation
 import UIKit
 import SwiftUI
-import CoreLocation
 
 //let landmarkData: [Landmark] = load("landmarkData.json")
 let profileData: [Profile] = load("profiles.json")
 let projectData: [Project] = load("projects.json")
+var interests: [String] = getInterests()
 
 func load<T: Decodable>(_ filename: String) -> T {
     let data: Data
@@ -35,4 +35,26 @@ func load<T: Decodable>(_ filename: String) -> T {
     } catch {
         fatalError("Couldn't parse \(filename) as \(T.self):\n\(error)")
     }
+}
+
+func getInterests() -> [String] {
+    var interestsArray: [String] = []
+    for profile in profileData {
+        for interest in profile.interests {
+            if interestsArray.contains(interest) == false {
+                interestsArray.append(interest)
+            }
+        }
+    }
+
+    for project in projectData {
+        for interest in project.interests {
+            if interestsArray.contains(interest) == false {
+                interestsArray.append(interest)
+            }
+        }
+    }
+
+    return interestsArray
+
 }
