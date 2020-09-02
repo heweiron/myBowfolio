@@ -15,6 +15,7 @@ struct HomeView: View {
     @State var index = 0
     @State var selected = 0
     @State var isExpand = false
+    @State var showEditProfile = false
     @EnvironmentObject var session: SessionStore
     
     func getUser () {
@@ -23,19 +24,23 @@ struct HomeView: View {
     
     var body: some View {
         
-        
+
+
+
         Group {
             
             // TODO: change!!!!!!!!!!!!!!!!!!!!!
             if session.session == nil {
+
+                   
                 ZStack {
                     VStack {
-
+                        
                         TopBar(selected: $selected, isExpand: $isExpand)
-                            
+                        
                         MainPages(selected: $selected)
-
-                    
+                        
+                        
                         
                     }.edgesIgnoringSafeArea(.all)
                     
@@ -46,22 +51,26 @@ struct HomeView: View {
                         
                         Rectangle().edgesIgnoringSafeArea(.all)
                             .foregroundColor(Color.black.opacity(0.01)).onTapGesture {
-                            self.isExpand.toggle()
+                                self.isExpand.toggle()
                         }
-                    // pop out options menu
-                     VStack(alignment: .leading) {
-                        
+                        // pop out options menu
+                        VStack(alignment: .leading) {
                             
-                        
+                            
+                            
                             Divider()
-  
+                            
                             Button(action: {
-
-                                
+                                self.showEditProfile = true
                             }) {
                                 Image(systemName: "person.circle").foregroundColor(.white)
                                 Text("My Profile").foregroundColor(.white)
                             }
+                            
+                            
+                            
+                            
+                            
                             Divider()
                             
                             Button(action: {
@@ -92,7 +101,9 @@ struct HomeView: View {
                         .offset(x: UIScreen.main.bounds.width/4, y: -UIScreen.main.bounds.height * 0.3)
                     }
                     
-                    
+                    if self.showEditProfile {
+                        EditProfileView(showEditProfile: $showEditProfile).transition(.asymmetric(insertion: .move(edge: .bottom), removal: .move(edge: .bottom))).zIndex(1)
+                    }
                     
                     
                     
@@ -103,6 +114,7 @@ struct HomeView: View {
         }.onAppear(perform: getUser)
         
     }
+    
 }
 
 struct MainPages: View {
