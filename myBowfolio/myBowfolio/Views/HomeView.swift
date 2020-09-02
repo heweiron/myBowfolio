@@ -14,6 +14,7 @@ struct HomeView: View {
     
     @State var index = 0
     @State var selected = 0
+    @State var isExpand = false
     @EnvironmentObject var session: SessionStore
     
     func getUser () {
@@ -24,25 +25,97 @@ struct HomeView: View {
         
         
         Group {
-            if session.session != nil {
-                VStack {
-                    TopBar(selected: $selected)
+            
+            // TODO: change!!!!!!!!!!!!!!!!!!!!!
+            if session.session == nil {
+                ZStack {
+                    VStack {
+
+                        TopBar(selected: $selected, isExpand: $isExpand)
+                            
+                        MainPages(selected: $selected)
+
                     
-                    // TODO: Change to actuall view
+                        
+                    }.edgesIgnoringSafeArea(.all)
                     
-                    Pages(currentPage: $selected, navigationOrientation: .horizontal, transitionStyle: .scroll, hasControl: false) { () -> [AnyView] in
-                        ProfilesView()
-                        ProjectsView()
-                        InterestsView()
-                        FilterView()
+                    
+                    
+                    
+                    if self.isExpand  {
+                        
+                        Rectangle().edgesIgnoringSafeArea(.all)
+                            .foregroundColor(Color.black.opacity(0.01)).onTapGesture {
+                            self.isExpand.toggle()
+                        }
+                    // pop out options menu
+                     VStack(alignment: .leading) {
+                        
+                            
+                        
+                            Divider()
+  
+                            Button(action: {
+
+                                
+                            }) {
+                                Image(systemName: "person.circle").foregroundColor(.white)
+                                Text("My Profile").foregroundColor(.white)
+                            }
+                            Divider()
+                            
+                            Button(action: {
+                                print("A")
+                            }) {
+                                Image(systemName: "plus.circle").foregroundColor(.white)
+                                Text("Add Project").foregroundColor(.white)
+                            }
+                            
+                            Divider()
+                            
+                            
+                            
+                            Button(action: {
+                                self.session.signOut() ? print("Sign Out Successfully"): print("Error")
+                                
+                            }) {
+                                Image(systemName: "person.crop.circle.badge.minus").foregroundColor(.white)
+                                Text("Log Out").foregroundColor(.white)
+                            }
+                            
+                            Divider()
+                        
+                    }.padding(.horizontal, 15)
+                        .frame(width: UIScreen.main.bounds.width*0.4)
+                        .background(Color.black.opacity(0.7))
+                        .cornerRadius(10)
+                        .offset(x: UIScreen.main.bounds.width/4, y: -UIScreen.main.bounds.height * 0.3)
                     }
                     
-                }.edgesIgnoringSafeArea(.all)
+                    
+                    
+                    
+                    
+                }
             } else {
                 ContentView()
             }
         }.onAppear(perform: getUser)
         
+    }
+}
+
+struct MainPages: View {
+    
+    @Binding var selected: Int
+    var body: some View {
+        
+        Pages(currentPage: $selected, navigationOrientation: .horizontal, transitionStyle: .scroll, hasControl: false) { () -> [AnyView] in
+            ProfilesView()
+            ProjectsView()
+            InterestsView()
+            FilterView()
+        }
     }
 }
 
@@ -55,6 +128,7 @@ struct HomeView_Previews: PreviewProvider {
 
 struct TopBar: View {
     @Binding var selected: Int
+    @Binding var isExpand: Bool
     @EnvironmentObject var session: SessionStore
     var body: some View {
         VStack(spacing: 20) {
@@ -64,12 +138,20 @@ struct TopBar: View {
                 Text("Bowfolios").font(.system(size: 30)).fontWeight(.semibold).foregroundColor(Color(#colorLiteral(red: 0.2486035228, green: 0.4458619356, blue: 0.3134422302, alpha: 1)))
                 Spacer()
                 
-                Button(action: {
-                    self.session.signOut() ? print("Sign Out Successfully"): print("Error")
+
+                
+                VStack {
+                    Button(action: {
+                        self.isExpand.toggle()
+
+                    }) {
+                        Image(systemName: "person.circle").font(.system(size: 45)).foregroundColor(Color(#colorLiteral(red: 0.2486035228, green: 0.4458619356, blue: 0.3134422302, alpha: 1)))
+                    }
                     
-                }) {
-                    Text("Log Out")
+                    
                 }
+                
+                
                 
             }
             

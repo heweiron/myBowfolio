@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		14E29B5CA16DAFBC19415838 /* Pods_myBowfolio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3396AEBAB9BA1EA8278E978E /* Pods_myBowfolio.framework */; };
 		451BE83A24FF26EE004E502F /* ProjectsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451BE83924FF26EE004E502F /* ProjectsViewModel.swift */; };
+		451BE83C24FFB3AD004E502F /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451BE83B24FFB3AD004E502F /* EditProfileView.swift */; };
+		451BE83F24FFB792004E502F /* KeyboardGuardian.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451BE83E24FFB792004E502F /* KeyboardGuardian.swift */; };
 		4598704B24FB8FE600CAA6D8 /* ProjectsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4598704A24FB8FE600CAA6D8 /* ProjectsView.swift */; };
 		4598705024FBA53500CAA6D8 /* Pages in Frameworks */ = {isa = PBXBuildFile; productRef = 4598704F24FBA53500CAA6D8 /* Pages */; };
 		4598705224FC9C3600CAA6D8 /* ProjectCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4598705124FC9C3600CAA6D8 /* ProjectCard.swift */; };
@@ -42,6 +44,8 @@
 		3396AEBAB9BA1EA8278E978E /* Pods_myBowfolio.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_myBowfolio.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		451BE83824FE7B66004E502F /* myBowfolio.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = myBowfolio.entitlements; sourceTree = "<group>"; };
 		451BE83924FF26EE004E502F /* ProjectsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsViewModel.swift; sourceTree = "<group>"; };
+		451BE83B24FFB3AD004E502F /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
+		451BE83E24FFB792004E502F /* KeyboardGuardian.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardGuardian.swift; sourceTree = "<group>"; };
 		4598704A24FB8FE600CAA6D8 /* ProjectsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsView.swift; sourceTree = "<group>"; };
 		4598705124FC9C3600CAA6D8 /* ProjectCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCard.swift; sourceTree = "<group>"; };
 		4598705324FCE81100CAA6D8 /* ProfileCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCard.swift; sourceTree = "<group>"; };
@@ -95,6 +99,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		451BE83D24FFB75C004E502F /* HelpClasses */ = {
+			isa = PBXGroup;
+			children = (
+				45DB0EF624FE20B300C41176 /* SessionStore.swift */,
+				451BE83E24FFB792004E502F /* KeyboardGuardian.swift */,
+			);
+			path = HelpClasses;
+			sourceTree = "<group>";
+		};
 		45D2BEAF24FA4AC40079A855 = {
 			isa = PBXGroup;
 			children = (
@@ -123,6 +136,7 @@
 				45DB0EF824FE6B9B00C41176 /* ViewModel */,
 				45D2BEF424FB842E0079A855 /* Model */,
 				45D2BEF724FB84E10079A855 /* Resources */,
+				451BE83D24FFB75C004E502F /* HelpClasses */,
 				45D2BEC124FA4AC70079A855 /* Assets.xcassets */,
 				45D2BEC624FA4AC70079A855 /* LaunchScreen.storyboard */,
 				45D2BED324FA69820079A855 /* DesignedButton.swift */,
@@ -132,7 +146,6 @@
 				45D2BEC924FA4AC70079A855 /* Info.plist */,
 				45DB0EF024FDDB5200C41176 /* GoogleService-Info.plist */,
 				45D2BEC324FA4AC70079A855 /* Preview Content */,
-				45DB0EF624FE20B300C41176 /* SessionStore.swift */,
 			);
 			path = myBowfolio;
 			sourceTree = "<group>";
@@ -167,6 +180,7 @@
 				4598705B24FD04E100CAA6D8 /* InterestsView.swift */,
 				4598705F24FD0CDA00CAA6D8 /* FilterView.swift */,
 				45DB0EF224FDEFFE00C41176 /* AlertView.swift */,
+				451BE83B24FFB3AD004E502F /* EditProfileView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -333,9 +347,11 @@
 				45D2BEF324FB79050079A855 /* Project.swift in Sources */,
 				4598705824FCF1D000CAA6D8 /* InterestCard.swift in Sources */,
 				45D2BEE524FB55610079A855 /* HomeView.swift in Sources */,
+				451BE83F24FFB792004E502F /* KeyboardGuardian.swift in Sources */,
 				45D2BED624FA6DF80079A855 /* LoginView.swift in Sources */,
 				45D2BED824FA80A20079A855 /* SignUpView.swift in Sources */,
 				45D2BEC024FA4AC40079A855 /* ContentView.swift in Sources */,
+				451BE83C24FFB3AD004E502F /* EditProfileView.swift in Sources */,
 				45D2BEEF24FB75040079A855 /* Profile.swift in Sources */,
 				4598705624FCF02900CAA6D8 /* ProfilesView.swift in Sources */,
 				4598705224FC9C3600CAA6D8 /* ProjectCard.swift in Sources */,

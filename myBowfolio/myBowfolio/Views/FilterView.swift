@@ -84,6 +84,7 @@ struct FilterView: View {
                     
                     
                 }.onAppear() {
+
                     self.profilesViewModel.fetchData()
                     self.projectsViewModel.fetchData()
                 }
