@@ -12,13 +12,16 @@ import FirebaseStorage
 struct ImagePicker: UIViewControllerRepresentable {
 
     @Binding var show: Bool
-    @Binding var data: Data
+    @Binding var imageName: String
+    
+    
     
     func makeUIViewController(context: UIViewControllerRepresentableContext<ImagePicker>) ->
         UIImagePickerController {
         
             let imagepic = UIImagePickerController()
             imagepic.sourceType = .photoLibrary
+            imagepic.delegate = context.coordinator
             return imagepic
             
     }
@@ -26,6 +29,10 @@ struct ImagePicker: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: UIViewControllerRepresentableContext<ImagePicker>) {
            
        }
+    
+    func makeCoordinator() -> ImagePicker.Coordinator {
+        return ImagePicker.Coordinator(parent1: self)
+    }
     
     
     
@@ -41,7 +48,17 @@ struct ImagePicker: UIViewControllerRepresentable {
         }
         
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            <#code#>
+            let image = info[.originalImage] as! UIImage
+            let storage = Storage.storage()
+            storage.reference().child(parent.imageName).putData(image.jpegData(compressionQuality: 0.35)!, metadata: nil) { (_, error) in
+                
+                if error != nil {
+                    print((error?.localizedDescription)!)
+                    return
+                }
+                print("Success")
+            }
+            parent.show.toggle()
         }
     }
     

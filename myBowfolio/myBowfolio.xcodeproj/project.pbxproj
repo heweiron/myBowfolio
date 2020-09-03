@@ -13,7 +13,6 @@
 		451BE84125009F18004E502F /* AddProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451BE84025009F18004E502F /* AddProjectView.swift */; };
 		451BE84325009FB6004E502F /* ProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451BE84225009FB6004E502F /* ProjectViewModel.swift */; };
 		451BE8452500F512004E502F /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451BE8442500F512004E502F /* ImagePicker.swift */; };
-		451BE8472500FA94004E502F /* sample copy.gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 451BE8462500FA92004E502F /* sample copy.gitignore */; };
 		4598704B24FB8FE600CAA6D8 /* ProjectsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4598704A24FB8FE600CAA6D8 /* ProjectsView.swift */; };
 		4598705024FBA53500CAA6D8 /* Pages in Frameworks */ = {isa = PBXBuildFile; productRef = 4598704F24FBA53500CAA6D8 /* Pages */; };
 		4598705224FC9C3600CAA6D8 /* ProjectCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4598705124FC9C3600CAA6D8 /* ProjectCard.swift */; };
@@ -51,7 +50,6 @@
 		451BE84025009F18004E502F /* AddProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectView.swift; sourceTree = "<group>"; };
 		451BE84225009FB6004E502F /* ProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewModel.swift; sourceTree = "<group>"; };
 		451BE8442500F512004E502F /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
-		451BE8462500FA92004E502F /* sample copy.gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "sample copy.gitignore"; sourceTree = "<group>"; };
 		4598704A24FB8FE600CAA6D8 /* ProjectsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsView.swift; sourceTree = "<group>"; };
 		4598705124FC9C3600CAA6D8 /* ProjectCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCard.swift; sourceTree = "<group>"; };
 		4598705324FCE81100CAA6D8 /* ProfileCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCard.swift; sourceTree = "<group>"; };
@@ -150,7 +148,6 @@
 				4598705324FCE81100CAA6D8 /* ProfileCard.swift */,
 				4598705724FCF1D000CAA6D8 /* InterestCard.swift */,
 				45D2BEC924FA4AC70079A855 /* Info.plist */,
-				451BE8462500FA92004E502F /* sample copy.gitignore */,
 				45DB0EF024FDDB5200C41176 /* GoogleService-Info.plist */,
 				45D2BEC324FA4AC70079A855 /* Preview Content */,
 			);
@@ -290,7 +287,6 @@
 				45D2BEF124FB78A40079A855 /* projects.json in Resources */,
 				45D2BEC824FA4AC70079A855 /* LaunchScreen.storyboard in Resources */,
 				45D2BEC524FA4AC70079A855 /* Preview Assets.xcassets in Resources */,
-				451BE8472500FA94004E502F /* sample copy.gitignore in Resources */,
 				45D2BEC224FA4AC70079A855 /* Assets.xcassets in Resources */,
 				45D2BEEB24FB747B0079A855 /* profiles.json in Resources */,
 				45DB0EF124FDDB5300C41176 /* GoogleService-Info.plist in Resources */,

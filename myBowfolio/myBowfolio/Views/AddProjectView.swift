@@ -46,9 +46,19 @@ struct AddProjectView: View {
                         generateContent(in: geometry, selectedArray: self.selectedArray)
                     }
                     
+                    
+                    
                     Section(header: Text("Participants")) {
                         TextField("Title", text: self.$projectViewModel.project.description)
                     }
+                    
+                    
+                    Section(header: Text("Image")) {
+                        Image("logo")
+                    }
+                    
+                    
+                    
                     
                 }
                 .navigationBarTitle("New Project", displayMode: .inline)
