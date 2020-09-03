@@ -16,6 +16,7 @@ struct HomeView: View {
     @State var selected = 0
     @State var isExpand = false
     @State var showEditProfile = false
+    @State var showAddProject = false
     @EnvironmentObject var session: SessionStore
     
     func getUser () {
@@ -74,7 +75,7 @@ struct HomeView: View {
                             Divider()
                             
                             Button(action: {
-                                print("A")
+                                self.showAddProject = true
                             }) {
                                 Image(systemName: "plus.circle").foregroundColor(.white)
                                 Text("Add Project").foregroundColor(.white)
@@ -107,6 +108,8 @@ struct HomeView: View {
                     
                     
                     
+                }.sheet(isPresented: $showAddProject) {
+                    AddProjectView()
                 }
             } else {
                 ContentView()

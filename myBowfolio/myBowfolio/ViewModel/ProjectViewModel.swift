@@ -8,11 +8,26 @@
 
 import Foundation
 import Firebase
+import Combine
 
 class ProjectViewModel: ObservableObject {
     
     private var db = Firestore.firestore()
-    @Published var project: Project = Project(name: "", homepage: "", description: "", interests: [])
+    private var cancellables = Set<AnyCancellable>()
+    
+    @Published var project: Project
+    @Published var modified = false
+    
+    init(project: Project  = Project(name: "", homepage: "", description: "", interests: [])) {
+        self.project = project
+        
+        self.$project
+            .dropFirst()
+            .sink { [weak self] project in
+                self?.modified = true
+        }
+    .store(in: &cancellables)
+    }
     
     func addProject(project: Project) {
         do {
@@ -20,5 +35,9 @@ class ProjectViewModel: ObservableObject {
         } catch {
             print(error)
         }
+    }
+    
+    func save() {
+        addProject(project: project)
     }
 }

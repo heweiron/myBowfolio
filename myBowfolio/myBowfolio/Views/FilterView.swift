@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct FilterView: View {
-    @State var offsetValue: Int = 10
+    @State var showSelections: Bool = false
     @State var selectedArray: [String] = []
     @State var interestsArray: [String] = []
     @ObservedObject private var profilesViewModel = ProfilesViewModel()
@@ -45,7 +45,7 @@ struct FilterView: View {
         
 
         
-        GeometryReader {geometry in
+        GeometryReader { geometry in
             
             
             ZStack {
@@ -57,7 +57,7 @@ struct FilterView: View {
                             Text("Interests:").fontWeight(.semibold)
                             Spacer()
                             Button(action: {
-                                self.offsetValue = 1
+                                self.showSelections = true
                                 self.interestsArray = self.getInterests()
                             }) {
                                 Image(systemName: "plus")
@@ -68,7 +68,7 @@ struct FilterView: View {
                         
                         HStack {
 
-                            self.generateContent(in: geometry)
+                            generateContent(in: geometry, selectedArray: self.selectedArray)
 
                         }.padding(.bottom, 30)
                         Spacer()
@@ -83,57 +83,25 @@ struct FilterView: View {
                     }
                     
                     
-                }.onAppear() {
+                }
+                .onAppear() {
 
                     self.profilesViewModel.fetchData()
                     self.projectsViewModel.fetchData()
                 }
                 
+                .background(Color.white)
                 
                 
-                Selections(offsetValue: self.$offsetValue, selectedArray: self.$selectedArray, interestsArray: self.$interestsArray)
-                    .animation(.default)
-            }
-            
+
+                    Selections(showSelections: self.$showSelections, selectedArray: self.$selectedArray, interestsArray: self.$interestsArray).zIndex(self.showSelections ? 1 : -1)
+
+                
+            }.edgesIgnoringSafeArea(.bottom)
         }
     }
     
-    // make item in HStack can wrap if this line is full
-    private func generateContent(in g: GeometryProxy) -> some View {
-        var width = CGFloat.zero
-        var height = CGFloat.zero
-        return ZStack(alignment: .topLeading) {
-            ForEach(self.selectedArray, id: \.self) { selectedItem in
-                Text("  \(selectedItem)  ")
-                .fontWeight(.semibold)
-                .background(Color(#colorLiteral(red: 0.4322651923, green: 0.5675497651, blue: 0.8860189915, alpha: 1)))
-                .foregroundColor(Color.white)
-                .cornerRadius(20)
-                    .padding([.horizontal, .vertical], 4)
-                    .alignmentGuide(.leading, computeValue: { d in
-                        if (abs(width - d.width) > g.size.width)
-                        {
-                            width = 0
-                            height -= d.height
-                        }
-                        let result = width
-                        if selectedItem == self.selectedArray.last! {
-                            width = 0 //last item
-                        } else {
-                            width -= d.width
-                        }
-                        return result
-                    })
-                    .alignmentGuide(.top, computeValue: {d in
-                        let result = height
-                        if selectedItem == self.selectedArray.last! {
-                            height = 0 // last item
-                        }
-                        return result
-                    })
-            }
-        }
-    }
+
     
     // Get profiles by given interests
 
@@ -157,66 +125,42 @@ struct FilterView: View {
 }
 
 struct Selections: View {
-    @ObservedObject private var profilesViewModel = ProfilesViewModel()
-    @ObservedObject private var projectsViewModel = ProjectsViewModel()
-
-    @Binding var offsetValue: Int
+    
+    @Binding var showSelections: Bool
     @Binding var selectedArray: [String]
     @Binding var interestsArray: [String]
     var body: some View {
-        VStack(spacing: 20) {
-            VStack{
-                HStack{
-                    Spacer()
-                    Button(action: {
-                        self.offsetValue = 10
-                    }) {
-                        Text("Done").font(.system(size: 22)).fontWeight(.semibold)
-                    }
-                }.padding()
-                
-                ScrollView {
-                    Divider()
-                    ForEach(interestsArray, id: \.self) { interest in
-                        SelectionRow(selectedArray: self.$selectedArray, content: interest)
-                    }
-                }
-            }
-        }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: UIScreen.main.bounds.height*3/5)
-            .background(Color(#colorLiteral(red: 1, green: 0.956505239, blue: 0.9437020421, alpha: 1)))
-        .cornerRadius(30)
-            .offset(y: CGFloat(self.offsetValue) * UIScreen.main.bounds.height*1/8)
-        .onAppear() {
-            self.profilesViewModel.fetchData()
-        }
         
+        VStack {
+            Spacer()
+            VStack(spacing: 20) {
+                
+                VStack{
+                    HStack{
+                        Spacer()
+                        Button(action: {
+                            self.showSelections = false
 
-    }
-    
-    func getInterests() -> [String] {
-        var interestsArray: [String] = []
-
-        //for profile in profilesViewModel.profiles {
-        for profile in profilesViewModel.profiles {
-            for interest in profile.interests {
-                if interestsArray.contains(interest) == false {
-                    interestsArray.append(interest)
+                        }) {
+                            Text("Done").font(.system(size: 22)).fontWeight(.semibold)
+                        }
+                    }.padding()
+                    
+                    ScrollView {
+                        Divider()
+                        ForEach(interestsArray, id: \.self) { interest in
+                            SelectionRow(selectedArray: self.$selectedArray, content: interest)
+                        }
+                    }
                 }
             }
-        }
-
-        //for project in projectsViewModel.projects {
-        for project in projectsViewModel.projects {
-            for interest in project.interests {
-                if interestsArray.contains(interest) == false {
-                    interestsArray.append(interest)
-                }
-            }
-        }
-
-        return interestsArray
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: UIScreen.main.bounds.height*3/5)
+            .background(Color(#colorLiteral(red: 0.8782730699, green: 0.878420651, blue: 0.8782535791, alpha: 1)))
+                .cornerRadius(30)
+        }.edgesIgnoringSafeArea(.bottom)
 
     }
+
 }
 
 struct SelectionRow: View {
@@ -265,3 +209,40 @@ struct FilterView_Previews: PreviewProvider {
 
 
 
+
+// make item in HStack can wrap if this line is full
+func generateContent(in g: GeometryProxy, selectedArray: [String]) -> some View {
+    var width = CGFloat.zero
+    var height = CGFloat.zero
+    return ZStack(alignment: .topLeading) {
+        ForEach(selectedArray, id: \.self) { selectedItem in
+            Text("  \(selectedItem)  ")
+            .fontWeight(.semibold)
+            .background(Color(#colorLiteral(red: 0.4322651923, green: 0.5675497651, blue: 0.8860189915, alpha: 1)))
+            .foregroundColor(Color.white)
+            .cornerRadius(20)
+                .padding([.horizontal, .vertical], 4)
+                .alignmentGuide(.leading, computeValue: { d in
+                    if (abs(width - d.width) > g.size.width)
+                    {
+                        width = 0
+                        height -= d.height
+                    }
+                    let result = width
+                    if selectedItem == selectedArray.last! {
+                        width = 0 //last item
+                    } else {
+                        width -= d.width
+                    }
+                    return result
+                })
+                .alignmentGuide(.top, computeValue: {d in
+                    let result = height
+                    if selectedItem == selectedArray.last! {
+                        height = 0 // last item
+                    }
+                    return result
+                })
+        }
+    }
+}
