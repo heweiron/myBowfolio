@@ -32,9 +32,6 @@ struct Test: View {
             }) {
                 Text("Button")
             }
-\
-            
-            
         }
     }
 }
