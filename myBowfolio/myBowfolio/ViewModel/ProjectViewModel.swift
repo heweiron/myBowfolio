@@ -18,7 +18,7 @@ class ProjectViewModel: ObservableObject {
     @Published var project: Project
     @Published var modified = false
     
-    init(project: Project  = Project(name: "", homepage: "", description: "", interests: [])) {
+    init(project: Project  = Project(name: "", homepage: "", description: "", interests: [], picture: "default")) {
         self.project = project
         
         self.$project

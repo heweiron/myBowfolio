@@ -17,11 +17,13 @@ struct Project: Codable, Hashable, Identifiable {
     var homepage: String
     var description: String
     var interests: [String]
+    var picture: String
     
     enum CodingKeys: String, CodingKey {
         case name
         case homepage
         case description
         case interests
+        case picture
     }
 }

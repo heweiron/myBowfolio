@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import FirebaseStorage
 
 struct AddProjectView: View {
     
@@ -16,8 +17,12 @@ struct AddProjectView: View {
     @ObservedObject private var projectsViewModel = ProjectsViewModel()
     
     @State var showSelections: Bool = false
+    @State var showImagePicker: Bool = false
     @State var selectedArray: [String] = []
     @State var interestsArray: [String] = []
+    @State var image: Image?
+    @State var inputImage: UIImage?
+
     
     
     var body: some View {
@@ -26,9 +31,18 @@ struct AddProjectView: View {
             ZStack {
                 Form {
                     Section(header: Text("Information")) {
-                        TextField("Name", text: self.$projectViewModel.project.name)
-                        TextField("HomePage", text: self.$projectViewModel.project.homepage)
-                        TextField("Description", text: self.$projectViewModel.project.description)
+                        HStack {
+                            Text("ProjectName:")
+                            TextField("Name", text: self.$projectViewModel.project.name)
+                        }
+                        HStack {
+                            Text("HomePage:   ")
+                            TextField("HomePage", text: self.$projectViewModel.project.homepage)
+                        }
+                        HStack {
+                            Text("Description:  ")
+                            TextField("Description", text: self.$projectViewModel.project.description)
+                        }
                     }
 
                     
@@ -53,8 +67,22 @@ struct AddProjectView: View {
                     }
                     
                     
-                    Section(header: Text("Image")) {
-                        Image("logo")
+                    Section(header:
+                        Text("")
+                    ) {
+                            HStack {
+                                Text("Picture:")
+                                Spacer()
+                                if self.image != nil {
+                                    self.image?.resizable().frame(width: 100, height: 100)
+                                } else {
+                                    Image("default").resizable().frame(width: 100, height: 100)
+                                }
+                                Image(systemName: "chevron.right")
+                            }.onTapGesture {
+                                    self.showImagePicker = true
+                            }
+                        
                     }
                     
                     
@@ -67,7 +95,8 @@ struct AddProjectView: View {
                     } , trailing: Button(action: { self.handleDoneTapped() }) {
                         Text("Done")}
                         .disabled(self.projectViewModel.project.name.isEmpty || self.projectViewModel.project.homepage.isEmpty || self.projectViewModel.project.description.isEmpty ||
-                            self.selectedArray.count <= 0)
+                            self.selectedArray.count <= 0 ||
+                            self.image == nil)
                 )
             Selections(showSelections: self.$showSelections, selectedArray: self.$selectedArray, interestsArray: self.$interestsArray).zIndex(self.showSelections ? 1 : -1)
 
@@ -77,7 +106,9 @@ struct AddProjectView: View {
                     self.projectsViewModel.fetchData()
                     self.profilesViewModel.fetchData()
             }
-        }
+        }.sheet(isPresented: self.$showImagePicker, onDismiss: self.loadImage) {
+            ImagePicker(show: self.$showImagePicker, image: self.$inputImage)
+            }
     }
 }
     
@@ -90,6 +121,7 @@ struct AddProjectView: View {
     
     func handleDoneTapped() {
         setInterests()
+        setPicureOfProject()
         projectViewModel.save()
         dismiss()
     }
@@ -126,6 +158,28 @@ struct AddProjectView: View {
     
     func setInterests() {
         self.projectViewModel.project.interests = self.selectedArray
+    }
+    
+    
+    func loadImage() {
+        guard let inputImage = inputImage else {return}
+        self.image = Image(uiImage: inputImage)
+    }
+    
+    func setPicureOfProject() {
+        self.projectViewModel.project.picture = self.projectViewModel.project.name
+        
+        let storage = Storage.storage()
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpeg"
+        storage.reference().child("images/\(self.projectViewModel.project.picture).jpg").putData((inputImage?.jpegData(compressionQuality: 0.35)!)!, metadata: metadata) { (_, error) in
+            
+            if error != nil {
+                print((error?.localizedDescription)!)
+                return
+            }
+            print("Success")
+        }
     }
 }
 

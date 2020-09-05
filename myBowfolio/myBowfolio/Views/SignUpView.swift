@@ -17,6 +17,7 @@ struct SignUpView: View {
     @State var showAlert: Bool = false
     
     @EnvironmentObject var session: SessionStore
+    @ObservedObject var userViewModel = UserViewModel()
     
     func signUp() {
         if self.password != self.repassword {
@@ -27,6 +28,9 @@ struct SignUpView: View {
                 if error != nil {
                     self.showAlert = true
                     self.alertMessage = error?.localizedDescription ?? ""
+                } else {
+                    let user = User(email: self.email, displayName: "")
+                    self.userViewModel.addUser(user: user)
                 }
             }
         }

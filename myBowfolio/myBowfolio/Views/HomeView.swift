@@ -30,11 +30,13 @@ struct HomeView: View {
 
         Group {
             
-            // TODO: change!!!!!!!!!!!!!!!!!!!!!
-            if session.session == nil {
+
+            if session.session != nil {
 
                    
                 ZStack {
+                    
+                    
                     VStack {
                         
                         TopBar(selected: $selected, isExpand: $isExpand)
@@ -48,7 +50,7 @@ struct HomeView: View {
                     
                     
                     
-                    if self.isExpand  {
+                    if self.isExpand {
                         
                         Rectangle().edgesIgnoringSafeArea(.all)
                             .foregroundColor(Color.black.opacity(0.01)).onTapGesture {
@@ -63,6 +65,7 @@ struct HomeView: View {
                             
                             Button(action: {
                                 self.showEditProfile = true
+                                self.isExpand = false
                             }) {
                                 Image(systemName: "person.circle").foregroundColor(.white)
                                 Text("My Profile").foregroundColor(.white)
@@ -76,6 +79,7 @@ struct HomeView: View {
                             
                             Button(action: {
                                 self.showAddProject = true
+                                self.isExpand = false
                             }) {
                                 Image(systemName: "plus.circle").foregroundColor(.white)
                                 Text("Add Project").foregroundColor(.white)
@@ -144,7 +148,6 @@ struct HomeView_Previews: PreviewProvider {
 struct TopBar: View {
     @Binding var selected: Int
     @Binding var isExpand: Bool
-    @EnvironmentObject var session: SessionStore
     var body: some View {
         VStack(spacing: 20) {
             HStack {

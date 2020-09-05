@@ -179,7 +179,7 @@ struct SelectionRow: View {
                print(self.selectedArray)
                 
             } else {
-                self.selectedArray.removeLast()
+                self.selectedArray.remove(at: self.selectedArray.firstIndex(of: self.content)!)
                 print(self.selectedArray)
             }
         }) {

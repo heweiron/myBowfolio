@@ -7,10 +7,14 @@
 //
 
 import SwiftUI
+import FirebaseStorage
 import Firebase
 import Combine
 
+
 class SessionStore: ObservableObject {
+    
+    
     var didChange = PassthroughSubject<SessionStore, Never>()
     @Published var session: User? { didSet { self.didChange.send(self) }}
     var handle: AuthStateDidChangeListenerHandle?
@@ -22,9 +26,9 @@ class SessionStore: ObservableObject {
                 // if we have a user, create a new user model
                 print("Got user: \(user)")
                 self.session = User(
-                    uid: user.uid,
-                    displayName: user.displayName,
-                    email: user.email
+                    id: user.uid,
+                    email: user.email ?? "",
+                    displayName: user.displayName ?? ""
                 )
             } else {
                 // if we don't have a user, set our session to nil
@@ -66,15 +70,17 @@ class SessionStore: ObservableObject {
     }
 }
 
-class User {
-    var uid: String
-    var email: String?
-    var displayName: String?
-
-    init(uid: String, displayName: String?, email: String?) {
-        self.uid = uid
-        self.email = email
-        self.displayName = displayName
-    }
-
-}
+//class User {
+//    var uid: String
+//    var email: String?
+//    var displayName: String?
+//    private var db = Firestore.firestore()
+//
+//    init(uid: String, displayName: String?, email: String?) {
+//        self.uid = uid
+//        self.email = email
+//        self.displayName = displayName
+//    }
+//
+//
+//}
