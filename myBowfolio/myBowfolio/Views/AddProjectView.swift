@@ -15,13 +15,18 @@ struct AddProjectView: View {
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject private var profilesViewModel = ProfilesViewModel()
     @ObservedObject private var projectsViewModel = ProjectsViewModel()
+    @ObservedObject private var usersViewModel = UsersViewModel()
     
     @State var showSelections: Bool = false
     @State var showImagePicker: Bool = false
+    @State var showParticipants: Bool = false
     @State var selectedArray: [String] = []
+    @State var selectedParticipantsArray: [String] = []
     @State var interestsArray: [String] = []
+    @State var usersArray: [String] = []
     @State var image: Image?
     @State var inputImage: UIImage?
+    @State var imageUrl = ""
 
     
     
@@ -34,6 +39,9 @@ struct AddProjectView: View {
                         HStack {
                             Text("ProjectName:")
                             TextField("Name", text: self.$projectViewModel.project.name)
+                            if !self.checkNameToBeIdentical(name: self.projectViewModel.project.name) {
+                                Text("This name is already in use").foregroundColor(Color.red)
+                            }
                         }
                         HStack {
                             Text("HomePage:   ")
@@ -56,15 +64,25 @@ struct AddProjectView: View {
                         }
                         
                     }) {
-                        //TextField("Title", text: self.$projectViewModel.project.homepage).disabled(true)
                         generateContent(in: geometry, selectedArray: self.selectedArray)
                     }
                     
                     
                     
-                    Section(header: Text("Participants")) {
-                        TextField("Title", text: self.$projectViewModel.project.description)
+                    Section(header: HStack {
+                        Text("Participants")
+                        Button(action: {
+                            self.showParticipants = true
+                            self.usersArray = self.getUsers()
+                        }) {
+                            Image(systemName: "plus.circle").font(.system(size: 18))
+                        }
+                        
+                    }) {
+                        generateContent(in: geometry, selectedArray: self.selectedParticipantsArray)
                     }
+                    
+                    
                     
                     
                     Section(header:
@@ -96,15 +114,23 @@ struct AddProjectView: View {
                         Text("Done")}
                         .disabled(self.projectViewModel.project.name.isEmpty || self.projectViewModel.project.homepage.isEmpty || self.projectViewModel.project.description.isEmpty ||
                             self.selectedArray.count <= 0 ||
-                            self.image == nil)
+                            self.image == nil ||
+                            self.checkNameToBeIdentical(name: self.projectViewModel.project.name) == false)
                 )
-            Selections(showSelections: self.$showSelections, selectedArray: self.$selectedArray, interestsArray: self.$interestsArray).zIndex(self.showSelections ? 1 : -1)
+                
+                // Selections of Interests
+            Selections(showSelections: self.$showSelections, selectedArray: self.$selectedArray, itemsArray: self.$interestsArray).zIndex(self.showSelections ? 1 : -1)
+                
+            // Selections for participants
+            Selections(showSelections: self.$showParticipants, selectedArray: self.$selectedParticipantsArray, itemsArray: self.$usersArray).zIndex(self.showParticipants ? 1 : -1)
+            
 
             
             } // end of ZStack
                 .onAppear() {
                     self.projectsViewModel.fetchData()
                     self.profilesViewModel.fetchData()
+                    self.usersViewModel.fetchData()
             }
         }.sheet(isPresented: self.$showImagePicker, onDismiss: self.loadImage) {
             ImagePicker(show: self.$showImagePicker, image: self.$inputImage)
@@ -121,6 +147,7 @@ struct AddProjectView: View {
     
     func handleDoneTapped() {
         setInterests()
+        setParticipants()
         setPicureOfProject()
         projectViewModel.save()
         dismiss()
@@ -160,6 +187,29 @@ struct AddProjectView: View {
         self.projectViewModel.project.interests = self.selectedArray
     }
     
+    func getUsers() -> [String] {
+        var usersArray: [String] = []
+        
+        for user in usersViewModel.users {
+            usersArray.append(user.email)
+        }
+        
+        return usersArray
+    }
+    
+    
+    func setParticipants() {
+        for user in self.selectedParticipantsArray {
+            for profile in self.profilesViewModel.profiles {
+                if profile.email == user.lowercased() {
+                    
+                    self.profilesViewModel.addOneProject(projectName: self.projectViewModel.project.name, email: profile.email)
+                    
+                }
+            }
+        }
+    }
+    
     
     func loadImage() {
         guard let inputImage = inputImage else {return}
@@ -167,12 +217,11 @@ struct AddProjectView: View {
     }
     
     func setPicureOfProject() {
-        self.projectViewModel.project.picture = self.projectViewModel.project.name
         
         let storage = Storage.storage()
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpeg"
-        storage.reference().child("images/\(self.projectViewModel.project.picture).jpg").putData((inputImage?.jpegData(compressionQuality: 0.35)!)!, metadata: metadata) { (_, error) in
+        storage.reference().child("images/\(self.projectViewModel.project.name).jpg").putData((inputImage?.jpegData(compressionQuality: 0.35)!)!, metadata: metadata) { (_, error) in
             
             if error != nil {
                 print((error?.localizedDescription)!)
@@ -181,6 +230,19 @@ struct AddProjectView: View {
             print("Success")
         }
     }
+    
+    
+    
+    
+    func checkNameToBeIdentical(name: String) -> Bool {
+        for project in self.projectsViewModel.projects {
+            if project.name == name.trimmingCharacters(in: .whitespacesAndNewlines) {
+                return false
+            }
+        }
+        return true
+    }
+    
 }
 
 struct AddProjectView_Previews: PreviewProvider {

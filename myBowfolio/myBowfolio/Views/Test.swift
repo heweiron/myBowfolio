@@ -7,32 +7,49 @@
 //
 
 import SwiftUI
-import FirebaseUI
+import SDWebImageSwiftUI
+import FirebaseStorage
+
 
 struct Test: View {
-    // Reference to an image file in Firebase Storage
-    let storageRef = Storage.storage().reference()
-    var imageView = UIImageView()
-
+    
+    @State var url = ""
+    @State var isSuccess = false
+    
+    
     var body: some View {
         
         VStack {
             Button(action: {
-                // Reference to an image file in Firebase Storage
-                let reference = self.storageRef.child("images/stars.jpg")
-
-                // UIImageView in your ViewController
-                let imageView: UIImageView = self.imageView
-
-                // Placeholder image
-                let placeholderImage = UIImage(named: "placeholder.jpg")
-
-                // Load the image using SDWebImage
-                imageView.sd_setImage(with: reference, placeholderImage: placeholderImage)
+                print(self.url)
             }) {
                 Text("Button")
             }
+            if url != "" {
+//                WebImage(url: URL(string: url)).resizable().aspectRatio(contentMode: .fit)
+                Text(url)
+            } else {
+                Loader()
+            }
+        }.onAppear() {
+            self.loadImageFromStorage()
         }
+
+    }
+    
+    func loadImageFromStorage() {
+        let storage = Storage.storage().reference()
+        let imageRef = storage.child("images/AAA.jpg")
+        imageRef.downloadURL { (url, error) in
+            if error != nil {
+                print((error?.localizedDescription)!)
+                return
+            }
+            self.url = "\(url!)"
+            
+
+        }
+
     }
 }
 

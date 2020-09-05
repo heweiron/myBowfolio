@@ -94,7 +94,7 @@ struct FilterView: View {
                 
                 
 
-                    Selections(showSelections: self.$showSelections, selectedArray: self.$selectedArray, interestsArray: self.$interestsArray).zIndex(self.showSelections ? 1 : -1)
+                    Selections(showSelections: self.$showSelections, selectedArray: self.$selectedArray, itemsArray: self.$interestsArray).zIndex(self.showSelections ? 1 : -1)
 
                 
             }.edgesIgnoringSafeArea(.bottom)
@@ -128,7 +128,7 @@ struct Selections: View {
     
     @Binding var showSelections: Bool
     @Binding var selectedArray: [String]
-    @Binding var interestsArray: [String]
+    @Binding var itemsArray: [String]
     var body: some View {
         
         VStack {
@@ -148,8 +148,8 @@ struct Selections: View {
                     
                     ScrollView {
                         Divider()
-                        ForEach(interestsArray, id: \.self) { interest in
-                            SelectionRow(selectedArray: self.$selectedArray, content: interest)
+                        ForEach(itemsArray, id: \.self) { item in
+                            SelectionRow(selectedArray: self.$selectedArray, content: item)
                         }
                     }
                 }

@@ -1,8 +1,8 @@
 //
-//  ProjectViewModel.swift
+//  ProfileViewModel.swift
 //  myBowfolio
 //
-//  Created by weirong he on 9/2/20.
+//  Created by weirong he on 9/4/20.
 //  Copyright © 2020 weirong he. All rights reserved.
 //
 
@@ -10,18 +10,18 @@ import Foundation
 import Firebase
 import Combine
 
-class ProjectViewModel: ObservableObject {
+class ProfileViewModel: ObservableObject {
     
     private var db = Firestore.firestore()
     private var cancellables = Set<AnyCancellable>()
     
-    @Published var project: Project
+    @Published var profile: Profile
     @Published var modified = false
     
-    init(project: Project  = Project(name: "", homepage: "", description: "", interests: [], picture: "default")) {
-        self.project = project
+    init(profile: Profile  = Profile(firstName: "", lastName: "", email: "", bio: "", title: "", projects: [], interests: [])) {
+        self.profile = profile
         
-        self.$project
+        self.$profile
             .dropFirst()
             .sink { [weak self] project in
                 self?.modified = true
@@ -29,16 +29,20 @@ class ProjectViewModel: ObservableObject {
     .store(in: &cancellables)
     }
     
-    func addProject(project: Project) {
+    func addProfile(profile: Profile) {
         do {
-            let _ = try db.collection("projects").document(project.id!).setData(from: project)
+            let _ = try db.collection("profiles").document(profile.email).setData(from: profile)
+            print("added")
         } catch {
             print(error)
         }
     }
     
     func save() {
-        addProject(project: project)
+        addProfile(profile: profile)
     }
+    
+    
+    
     
 }

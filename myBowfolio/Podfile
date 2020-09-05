@@ -18,6 +18,6 @@ pod 'Firebase/Firestore'
 pod 'Firebase'
 pod 'FirebaseFirestoreSwift'
 pod 'Firebase/Storage'
-pod 'FirebaseUI/Storage'
+pod 'SDWebImageSwiftUI'
 
 end

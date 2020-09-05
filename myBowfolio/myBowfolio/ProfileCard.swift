@@ -7,19 +7,31 @@
 //
 
 import SwiftUI
+import FirebaseStorage
+import SDWebImageSwiftUI
 
 struct ProfileCard: View {
     
     var profile: Profile
     @ObservedObject var projectsViewModel = ProjectsViewModel()
+    @State var url = ""
 
     var body: some View {
         
         VStack(spacing: 20) {
             
-            // Title
-            Text("\(profile.firstName) \(profile.lastName)").fontWeight(.bold)
-            Text(profile.title).foregroundColor(Color.black.opacity(0.6))
+            HStack {
+                VStack(spacing: 20) {
+                    // Title
+                    Text("\(profile.firstName) \(profile.lastName)").fontWeight(.bold)
+                    Text(profile.title).foregroundColor(Color.black.opacity(0.6))
+                }
+                if url != "" {
+                    WebImage(url: URL(string: url)).resizable().frame(width: 100, height: 100)
+                } else {
+                    Loader()
+                }
+            }.onAppear(perform: loadImageFromStorage)
             
             // description
             Text("\(profile.bio)").font(.subheadline).foregroundColor(Color.black).fixedSize(horizontal: false, vertical: true)
@@ -93,6 +105,20 @@ struct ProfileCard: View {
         print("Error: Can't find that project")
         return projectData[0]
         
+    }
+    
+    func loadImageFromStorage() {
+        let storage = Storage.storage().reference()
+        let imageRef = storage.child("images/AAA.jpg")
+        imageRef.downloadURL { (url, error) in
+            if error != nil {
+                print((error?.localizedDescription)!)
+                return
+            }
+            self.url = "\(url!)"
+
+        }
+
     }
 }
 

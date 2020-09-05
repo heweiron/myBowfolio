@@ -7,18 +7,42 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
+import FirebaseStorage
+
 
 struct ProjectCard: View {
     
     var project: Project
+    @State var url: String = ""
     @ObservedObject private var viewModel = ProfilesViewModel()
 
     var body: some View {
         
         VStack(spacing: 20) {
             
-            // Title
-            Text("\(project.name)").fontWeight(.bold)
+            // Title and Image
+            HStack {
+                
+                if url != "" {
+                    WebImage(url: URL(string: url)).resizable().frame(width: 80, height: 80).cornerRadius(50)
+                } else {
+                    ZStack {
+                        
+                        Circle().frame(width: 80, height: 80).foregroundColor(Color.white)
+                        VStack {
+                            Image(systemName: "gobackward").font(.system(size: 24))
+                            Text("Tap To Reload").font(.system(size: 10))
+                        }
+                    }.onTapGesture {
+                        self.loadImageFromStorage()
+                    }
+                    
+                        
+                }
+                Text("\(project.name)").fontWeight(.bold)
+                Spacer()
+            }
             
             // description
             Text("\(project.description)").font(.subheadline).foregroundColor(Color.black).fixedSize(horizontal: false, vertical: true)
@@ -71,6 +95,7 @@ struct ProjectCard: View {
                 .shadow(radius: 20)
                 
         )
+        .onAppear(perform: loadImageFromStorage)
     }
     
 
@@ -86,6 +111,22 @@ struct ProjectCard: View {
         }
         return participants
     }
+    
+    func loadImageFromStorage() {
+        let storage = Storage.storage().reference()
+        let imageRef = storage.child("images/\(project.name).jpg")
+        imageRef.downloadURL { (url, error) in
+            if error != nil {
+                print((error?.localizedDescription)!)
+                return
+            }
+            self.url = "\(url!)"
+            
+
+        }
+
+    }
+    
 }
 
 struct ProjectCard_Previews: PreviewProvider {

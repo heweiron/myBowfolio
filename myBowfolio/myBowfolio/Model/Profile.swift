@@ -9,11 +9,11 @@
 import Foundation
 import SwiftUI
 import FirebaseFirestoreSwift
+import FirebaseAuth
 
 struct Profile: Codable, Hashable {
     
     @DocumentID var id: String? = UUID().uuidString
-    
     var firstName: String
     var lastName: String
     var email: String
