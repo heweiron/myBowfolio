@@ -23,11 +23,37 @@ struct ContentView: View {
                 // introduction of the app scroll view
                 
                 Pages(currentPage: $index, navigationOrientation: .horizontal, transitionStyle: .scroll, bounce: true, wrap: false, hasControl: true, controlAlignment: .bottom) { () -> [AnyView] in
-                    Image("projects-page")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                    Image("projects-page")
-                        .resizable()
+                    ZStack {
+                        HStack {
+                            Image("editProfile")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                            Image("profileView")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            
+                        }
+                        
+                        Text("  Making your profile  ").fontWeight(.semibold).font(.system(size: 38)).background(Color.black.opacity(0.3)).rotationEffect(Angle(degrees: 20)).foregroundColor(.white)
+                    }
+                    ZStack {
+                        HStack {
+                            Image("interestView")
+                                .resizable().aspectRatio(contentMode: .fit)
+                            Image("filterView")
+                            .resizable().aspectRatio(contentMode: .fit)
+                        }
+                        Text("  Adding your projects  ").fontWeight(.semibold).font(.system(size: 38)).background(Color.black.opacity(0.3)).rotationEffect(Angle(degrees: -20)).foregroundColor(.white)
+                    }
+                    ZStack {
+                        HStack {
+                            Image("addProject")
+                                .resizable().aspectRatio(contentMode: .fit)
+                            Image("editProfile")
+                            .resizable().aspectRatio(contentMode: .fit)
+                        }
+                        Text("connect to people with shared interests!").fontWeight(.semibold).font(.system(size: 38)).multilineTextAlignment(.center).background(Color.black.opacity(0.3)).foregroundColor(.white)
+                    }
                 }.frame(height: 300)
                 
                 
