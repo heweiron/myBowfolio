@@ -98,6 +98,7 @@ struct FilterView: View {
 
                 
             }.edgesIgnoringSafeArea(.bottom)
+
         }
     }
     

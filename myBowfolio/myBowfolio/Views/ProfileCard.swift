@@ -69,8 +69,7 @@ struct ProfileCard: View {
                         ForEach(profile.projects, id: \.self) { project in
                             
                             // TODO: change it to image later
-                            WebImage(url: URL(string: self.getProject(projectName: project).picture))
-                                .resizable().frame(width: 50, height: 50).cornerRadius(50)
+                            AnimatedImage(url: URL(string: self.getProject(projectName: project))).resizable().frame(width: 50, height: 50).cornerRadius(50)
                         }
                     }
                 }
@@ -98,15 +97,15 @@ struct ProfileCard: View {
         )
     }
     
-    func getProject(projectName: String) -> Project {
+    func getProject(projectName: String) -> String {
         for project in projectsViewModel.projects {
             if project.name == projectName {
-                return project
+                return project.picture
             }
             
         }
         print("Error: Can't find that project")
-        return projectData[0]
+        return ""
         
     }
 //
