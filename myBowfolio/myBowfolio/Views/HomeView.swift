@@ -106,19 +106,20 @@ struct HomeView: View {
                         .offset(x: UIScreen.main.bounds.width/4, y: -UIScreen.main.bounds.height * 0.3)
                     }
                     
-                    if self.showEditProfile {
-                        EditProfileView(showEditProfile: $showEditProfile).transition(.asymmetric(insertion: .move(edge: .bottom), removal: .move(edge: .bottom))).zIndex(1)
-                    }
-                    
                     
                     
                 }.sheet(isPresented: $showAddProject) {
                     AddProjectView()
                 }
+                .sheet(isPresented: $showEditProfile) {
+                    EditProfileView(showEditProfile: self.$showEditProfile)
+                }
             } else {
                 ContentView()
             }
-        }.onAppear(perform: getUser)
+        }.onAppear {
+            self.getUser()
+        }
         
     }
     

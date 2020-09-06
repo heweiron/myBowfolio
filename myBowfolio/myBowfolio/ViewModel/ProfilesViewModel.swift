@@ -32,7 +32,7 @@ class ProfilesViewModel: ObservableObject {
     
     
     func addOneProject(projectName: String, email: String) {
-        db.collection("profiles").document(email.lowercased()).updateData(["projects" : FieldValue.arrayUnion([projectName])])
+        db.collection("profiles").document(email).updateData(["projects" : FieldValue.arrayUnion([projectName])])
         
         print("updated!")
         

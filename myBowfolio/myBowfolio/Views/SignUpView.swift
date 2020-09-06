@@ -18,6 +18,7 @@ struct SignUpView: View {
     
     @EnvironmentObject var session: SessionStore
     @ObservedObject var userViewModel = UserViewModel()
+    @ObservedObject var profileViewModel = ProfileViewModel()
     
     func signUp() {
         if self.password != self.repassword {
@@ -31,13 +32,15 @@ struct SignUpView: View {
                 } else {
                     let user = User(email: self.email, displayName: "")
                     self.userViewModel.addUser(user: user)
+                    self.profileViewModel.profile.email = self.email
+                    self.profileViewModel.addProfile(profile: self.profileViewModel.profile)
                 }
             }
         }
     }
     var body: some View {
         
-        ZStack{
+        ZStack {
             VStack {
                 // title
                 Text("Register")

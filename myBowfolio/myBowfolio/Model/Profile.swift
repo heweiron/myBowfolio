@@ -21,6 +21,7 @@ struct Profile: Codable, Hashable {
     var title: String
     var projects: [String]
     var interests: [String]
+    var picture: String
     
     enum CodingKeys: String, CodingKey {
         case firstName
@@ -30,5 +31,6 @@ struct Profile: Codable, Hashable {
         case title
         case projects
         case interests
+        case picture
     }
 }

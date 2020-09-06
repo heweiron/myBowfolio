@@ -18,7 +18,7 @@ class ProjectViewModel: ObservableObject {
     @Published var project: Project
     @Published var modified = false
     
-    init(project: Project  = Project(name: "", homepage: "", description: "", interests: [], picture: "default")) {
+    init(project: Project  = Project(name: "", homepage: "", description: "", interests: [], picture: "")) {
         self.project = project
         
         self.$project
@@ -39,6 +39,25 @@ class ProjectViewModel: ObservableObject {
     
     func save() {
         addProject(project: project)
+        loadImageFromStorage()
+    }
+    
+    
+    func loadImageFromStorage() {
+        let storage = Storage.storage().reference()
+        let imageRef = storage.child("images/\(project.name).jpg")
+        imageRef.downloadURL { (url, error) in
+            if error != nil {
+                print((error?.localizedDescription)!)
+                self.loadImageFromStorage()
+            } else {
+            //self.project.picture = "\(url!)"
+            self.db.collection("projects").document(self.project.id!).updateData(["picture" : "\(url!)"])
+            }
+            
+
+        }
+
     }
     
 }

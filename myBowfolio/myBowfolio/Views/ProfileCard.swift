@@ -7,14 +7,13 @@
 //
 
 import SwiftUI
-import FirebaseStorage
 import SDWebImageSwiftUI
 
 struct ProfileCard: View {
     
     var profile: Profile
     @ObservedObject var projectsViewModel = ProjectsViewModel()
-    @State var url = ""
+
 
     var body: some View {
         
@@ -26,12 +25,12 @@ struct ProfileCard: View {
                     Text("\(profile.firstName) \(profile.lastName)").fontWeight(.bold)
                     Text(profile.title).foregroundColor(Color.black.opacity(0.6))
                 }
-                if url != "" {
-                    WebImage(url: URL(string: url)).resizable().frame(width: 100, height: 100)
+                if profile.picture != "" {
+                    WebImage(url: URL(string: profile.picture)).resizable().frame(width: 100, height: 100)
                 } else {
                     Loader()
                 }
-            }.onAppear(perform: loadImageFromStorage)
+            }
             
             // description
             Text("\(profile.bio)").font(.subheadline).foregroundColor(Color.black).fixedSize(horizontal: false, vertical: true)
@@ -67,7 +66,8 @@ struct ProfileCard: View {
                         ForEach(profile.projects, id: \.self) { project in
                             
                             // TODO: change it to image later
-                            Text(self.getProject(projectName: project).name)
+                            WebImage(url: URL(string: self.getProject(projectName: project).picture))
+                                .resizable().frame(width: 50, height: 50).cornerRadius(50)
                         }
                     }
                 }
@@ -106,20 +106,21 @@ struct ProfileCard: View {
         return projectData[0]
         
     }
-    
-    func loadImageFromStorage() {
-        let storage = Storage.storage().reference()
-        let imageRef = storage.child("images/AAA.jpg")
-        imageRef.downloadURL { (url, error) in
-            if error != nil {
-                print((error?.localizedDescription)!)
-                return
-            }
-            self.url = "\(url!)"
-
-        }
-
-    }
+//
+//    func loadImageFromStorage() -> String {
+//        let storage = Storage.storage().reference()
+//        let imageRef = storage.child("images/AAA.jpg")
+//        var temp: String = ""
+//        imageRef.downloadURL { (url, error) in
+//            if error != nil {
+//                print((error?.localizedDescription)!)
+//                return
+//            }
+//            temp = "\(url!)"
+//
+//        }
+//        return temp
+//    }
 }
 
 

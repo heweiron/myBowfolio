@@ -18,7 +18,7 @@ class ProfileViewModel: ObservableObject {
     @Published var profile: Profile
     @Published var modified = false
     
-    init(profile: Profile  = Profile(firstName: "", lastName: "", email: "", bio: "", title: "", projects: [], interests: [])) {
+    init(profile: Profile  = Profile(firstName: "", lastName: "", email: "", bio: "", title: "", projects: [], interests: [], picture: "")) {
         self.profile = profile
         
         self.$profile

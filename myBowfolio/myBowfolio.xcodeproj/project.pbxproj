@@ -158,10 +158,6 @@
 				451BE83D24FFB75C004E502F /* HelpClasses */,
 				45D2BEC124FA4AC70079A855 /* Assets.xcassets */,
 				45D2BEC624FA4AC70079A855 /* LaunchScreen.storyboard */,
-				45D2BED324FA69820079A855 /* DesignedButton.swift */,
-				4598705124FC9C3600CAA6D8 /* ProjectCard.swift */,
-				4598705324FCE81100CAA6D8 /* ProfileCard.swift */,
-				4598705724FCF1D000CAA6D8 /* InterestCard.swift */,
 				45D2BEC924FA4AC70079A855 /* Info.plist */,
 				45DB0EF024FDDB5200C41176 /* GoogleService-Info.plist */,
 				45D2BEC324FA4AC70079A855 /* Preview Content */,
@@ -204,6 +200,10 @@
 				451BE84025009F18004E502F /* AddProjectView.swift */,
 				45A50B4325032E3E000BDE14 /* Test.swift */,
 				45A50B5125039E43000BDE14 /* EditProject.swift */,
+				45D2BED324FA69820079A855 /* DesignedButton.swift */,
+				4598705124FC9C3600CAA6D8 /* ProjectCard.swift */,
+				4598705324FCE81100CAA6D8 /* ProfileCard.swift */,
+				4598705724FCF1D000CAA6D8 /* InterestCard.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
