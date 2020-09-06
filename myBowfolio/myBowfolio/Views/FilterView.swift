@@ -194,6 +194,10 @@ struct SelectionRow: View {
             }.font(.system(size: 25)).padding()
         }.foregroundColor(Color.black)
         Divider()
+        }.onAppear {
+            if self.selectedArray.contains(self.content) {
+                self.isSelected = true
+            }
         }
     }
 

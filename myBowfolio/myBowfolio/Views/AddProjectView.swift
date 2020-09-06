@@ -27,6 +27,8 @@ struct AddProjectView: View {
     @State var image: Image?
     @State var inputImage: UIImage?
     @State var imageUrl = ""
+    
+    @Binding var showAddProject: Bool
 
     
     
@@ -130,7 +132,6 @@ struct AddProjectView: View {
                 .onAppear() {
                     self.projectsViewModel.fetchData()
                     self.profilesViewModel.fetchData()
-                    self.usersViewModel.fetchData()
             }
         }.sheet(isPresented: self.$showImagePicker, onDismiss: self.loadImage) {
             ImagePicker(show: self.$showImagePicker, image: self.$inputImage)
@@ -154,6 +155,7 @@ struct AddProjectView: View {
     }
     
     func dismiss() {
+        self.showAddProject = false
         presentationMode.wrappedValue.dismiss()
     }
     
@@ -190,8 +192,8 @@ struct AddProjectView: View {
     func getUsers() -> [String] {
         var usersArray: [String] = []
         
-        for user in usersViewModel.users {
-            usersArray.append(user.email)
+        for profile in profilesViewModel.profiles {
+            usersArray.append(profile.email)
         }
         
         return usersArray
@@ -201,7 +203,7 @@ struct AddProjectView: View {
     func setParticipants() {
         for user in self.selectedParticipantsArray {
             for profile in self.profilesViewModel.profiles {
-                if profile.email == user.lowercased() {
+                if profile.email.lowercased() == user.lowercased() {
                     
                     self.profilesViewModel.addOneProject(projectName: self.projectViewModel.project.name, email: profile.email)
                     
@@ -221,13 +223,13 @@ struct AddProjectView: View {
         let storage = Storage.storage()
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpeg"
-        storage.reference().child("images/\(self.projectViewModel.project.name).jpg").putData((inputImage?.jpegData(compressionQuality: 0.35)!)!, metadata: metadata) { (_, error) in
+        storage.reference().child("projectImages/\(self.projectViewModel.project.name).jpg").putData((inputImage?.jpegData(compressionQuality: 0.35)!)!, metadata: metadata) { (_, error) in
             
             if error != nil {
                 print((error?.localizedDescription)!)
                 return
             }
-            print("Success")
+            print("Upload project image Successfully")
         }
     }
     
@@ -247,6 +249,6 @@ struct AddProjectView: View {
 
 struct AddProjectView_Previews: PreviewProvider {
     static var previews: some View {
-        AddProjectView()
+        AddProjectView(showAddProject: .constant(true))
     }
 }

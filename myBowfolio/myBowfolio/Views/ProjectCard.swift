@@ -56,12 +56,11 @@ struct ProjectCard: View {
             
             // participants
             
-            // TODO: change String of name to the Image of Profile
             Divider()
             ScrollView(.horizontal) {
                 HStack{
                     ForEach(getParticipants(project: project.name) , id: \.self) { participant in
-                        Text(participant)
+                        WebImage(url: URL(string: participant)).resizable().frame(width: 50, height: 50).cornerRadius(50)
                         
                     }
                 }
@@ -94,8 +93,8 @@ struct ProjectCard: View {
         var participants: [String] = []
         for profile in viewModel.profiles {
             if profile.projects.contains(project) {
-                // TODO: should be profile.image, change it later
-                participants.append(profile.firstName)
+
+                participants.append(profile.picture)
             }
         }
         return participants

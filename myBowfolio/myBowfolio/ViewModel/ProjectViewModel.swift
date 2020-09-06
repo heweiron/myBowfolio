@@ -45,7 +45,7 @@ class ProjectViewModel: ObservableObject {
     
     func loadImageFromStorage() {
         let storage = Storage.storage().reference()
-        let imageRef = storage.child("images/\(project.name).jpg")
+        let imageRef = storage.child("projectImages/\(project.name).jpg")
         imageRef.downloadURL { (url, error) in
             if error != nil {
                 print((error?.localizedDescription)!)

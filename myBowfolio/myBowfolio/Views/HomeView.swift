@@ -15,14 +15,15 @@ struct HomeView: View {
     @State var index = 0
     @State var selected = 0
     @State var isExpand = false
+    @State var showSheet = false
     @State var showEditProfile = false
     @State var showAddProject = false
     @EnvironmentObject var session: SessionStore
+    @ObservedObject var profilesViewModel = ProfilesViewModel()
+    @State var profile = Profile(firstName: "", lastName: "", email: "a", bio: "", title: "", projects: [], interests: [], picture: "")
     
-    func getUser () {
-        session.listen()
-    }
     
+
     var body: some View {
         
 
@@ -32,7 +33,7 @@ struct HomeView: View {
             
 
             if session.session != nil {
-
+                // user sign in successfully
                    
                 ZStack {
                     
@@ -46,6 +47,9 @@ struct HomeView: View {
                         
                         
                     }.edgesIgnoringSafeArea(.all)
+                    .sheet(isPresented: $showEditProfile) {
+                        EditProfileView(showEditProfile: self.$showEditProfile, profile: self.profile)
+                    }
                     
                     
                     
@@ -64,8 +68,10 @@ struct HomeView: View {
                             Divider()
                             
                             Button(action: {
+                                self.showSheet = true
                                 self.showEditProfile = true
                                 self.isExpand = false
+                                self.profile = self.getUserProfile()
                             }) {
                                 Image(systemName: "person.circle").foregroundColor(.white)
                                 Text("My Profile").foregroundColor(.white)
@@ -78,6 +84,7 @@ struct HomeView: View {
                             Divider()
                             
                             Button(action: {
+                                self.showSheet = true
                                 self.showAddProject = true
                                 self.isExpand = false
                             }) {
@@ -108,19 +115,49 @@ struct HomeView: View {
                     
                     
                     
-                }.sheet(isPresented: $showAddProject) {
-                    AddProjectView()
                 }
-                .sheet(isPresented: $showEditProfile) {
-                    EditProfileView(showEditProfile: self.$showEditProfile)
+                .sheet(isPresented: $showSheet) {
+                    if self.showAddProject {
+                        AddProjectView(showAddProject: self.$showAddProject)
+                    }
+                    if self.showEditProfile {
+                        EditProfileView(showEditProfile: self.$showEditProfile, profile: self.profile)
+                    }
                 }
+
+                
+                .onAppear {
+                    self.profilesViewModel.fetchData()
+                }
+                
+                
             } else {
+                
+                // no user sign in
                 ContentView()
             }
         }.onAppear {
             self.getUser()
         }
         
+        
+    }
+    
+    
+    
+    // MARK: -DATA function
+    func getUser () {
+        session.listen()
+    }
+    
+    func getUserProfile() -> Profile{
+        for profile in self.profilesViewModel.profiles {
+            if profile.email.lowercased() == Auth.auth().currentUser?.email {
+                return profile
+            }
+
+        }
+        return self.profile
     }
     
 }

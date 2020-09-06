@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct InterestCard: View {
     
@@ -24,7 +25,7 @@ struct InterestCard: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     ForEach(getProfilesAndProjects(interest: interest), id: \.self) { profileOrProject in
-                        Text(profileOrProject)
+                        WebImage(url: URL(string: profileOrProject)).resizable().frame(width: 50, height: 50).cornerRadius(50)
                     }
                 }
             }.onAppear() {
@@ -57,7 +58,7 @@ struct InterestCard: View {
             if profile.interests.contains(interest) {
                 
                 // TODO: change firstName to Image
-                result.append(profile.firstName)
+                result.append(profile.picture)
 
             }
         }
@@ -66,7 +67,7 @@ struct InterestCard: View {
         for project in projectsViewModel.projects {
             if project.interests.contains(interest) {
                 // TODO: change .name to Image
-                result.append(project.name)
+                result.append(project.picture)
             }
         }
         

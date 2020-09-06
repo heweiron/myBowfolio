@@ -20,16 +20,19 @@ struct ProfileCard: View {
         VStack(spacing: 20) {
             
             HStack {
+
+                if profile.picture != "" {
+                    WebImage(url: URL(string: profile.picture)).resizable().frame(width: 80, height: 80).cornerRadius(15)
+                } else {
+                    Image("default").resizable().frame(width: 80, height: 80)
+                }
+                
                 VStack(spacing: 20) {
                     // Title
                     Text("\(profile.firstName) \(profile.lastName)").fontWeight(.bold)
                     Text(profile.title).foregroundColor(Color.black.opacity(0.6))
                 }
-                if profile.picture != "" {
-                    WebImage(url: URL(string: profile.picture)).resizable().frame(width: 100, height: 100)
-                } else {
-                    Loader()
-                }
+                Spacer()
             }
             
             // description
@@ -128,6 +131,6 @@ struct ProfileCard: View {
 
 struct ProfileCard_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileCard(profile: profileData[0])
+        ProfileCard(profile: profileData[3])
     }
 }

@@ -28,6 +28,7 @@
 		45A50B4E25038D09000BDE14 /* UsersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A50B4D25038D09000BDE14 /* UsersViewModel.swift */; };
 		45A50B502503947F000BDE14 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A50B4F2503947F000BDE14 /* ProfileViewModel.swift */; };
 		45A50B5225039E43000BDE14 /* EditProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A50B5125039E43000BDE14 /* EditProject.swift */; };
+		45A50B542504BA53000BDE14 /* MutiLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A50B532504BA53000BDE14 /* MutiLineTextField.swift */; };
 		45D2BEBC24FA4AC40079A855 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D2BEBB24FA4AC40079A855 /* AppDelegate.swift */; };
 		45D2BEBE24FA4AC40079A855 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D2BEBD24FA4AC40079A855 /* SceneDelegate.swift */; };
 		45D2BEC024FA4AC40079A855 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D2BEBF24FA4AC40079A855 /* ContentView.swift */; };
@@ -71,6 +72,7 @@
 		45A50B4D25038D09000BDE14 /* UsersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersViewModel.swift; sourceTree = "<group>"; };
 		45A50B4F2503947F000BDE14 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		45A50B5125039E43000BDE14 /* EditProject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProject.swift; sourceTree = "<group>"; };
+		45A50B532504BA53000BDE14 /* MutiLineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutiLineTextField.swift; sourceTree = "<group>"; };
 		45D2BEB824FA4AC40079A855 /* myBowfolio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = myBowfolio.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45D2BEBB24FA4AC40079A855 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		45D2BEBD24FA4AC40079A855 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -120,9 +122,11 @@
 		451BE83D24FFB75C004E502F /* HelpClasses */ = {
 			isa = PBXGroup;
 			children = (
+				45D2BED324FA69820079A855 /* DesignedButton.swift */,
 				45DB0EF624FE20B300C41176 /* SessionStore.swift */,
 				451BE8442500F512004E502F /* ImagePicker.swift */,
 				45A50B452503348F000BDE14 /* Loader.swift */,
+				45A50B532504BA53000BDE14 /* MutiLineTextField.swift */,
 			);
 			path = HelpClasses;
 			sourceTree = "<group>";
@@ -200,7 +204,6 @@
 				451BE84025009F18004E502F /* AddProjectView.swift */,
 				45A50B4325032E3E000BDE14 /* Test.swift */,
 				45A50B5125039E43000BDE14 /* EditProject.swift */,
-				45D2BED324FA69820079A855 /* DesignedButton.swift */,
 				4598705124FC9C3600CAA6D8 /* ProjectCard.swift */,
 				4598705324FCE81100CAA6D8 /* ProfileCard.swift */,
 				4598705724FCF1D000CAA6D8 /* InterestCard.swift */,
@@ -385,6 +388,7 @@
 				45D2BED624FA6DF80079A855 /* LoginView.swift in Sources */,
 				45A50B4425032E3E000BDE14 /* Test.swift in Sources */,
 				45A50B4E25038D09000BDE14 /* UsersViewModel.swift in Sources */,
+				45A50B542504BA53000BDE14 /* MutiLineTextField.swift in Sources */,
 				45D2BED824FA80A20079A855 /* SignUpView.swift in Sources */,
 				45D2BEC024FA4AC40079A855 /* ContentView.swift in Sources */,
 				451BE83C24FFB3AD004E502F /* EditProfileView.swift in Sources */,

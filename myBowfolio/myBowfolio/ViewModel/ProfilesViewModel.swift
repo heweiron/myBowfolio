@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import FirebaseStorage
 import FirebaseFirestore
 import FirebaseFirestoreSwift
  
@@ -37,4 +38,37 @@ class ProfilesViewModel: ObservableObject {
         print("updated!")
         
         }
+    
+    func updateProfile(profile: Profile) {
+        do {
+            try db.collection("profiles").document(profile.email).setData(from: profile, merge: true)
+        } catch {
+            print(error)
+        }
+    }
+    
+    func loadImageFromStorage(profile: Profile) {
+        let storage = Storage.storage().reference()
+        let imageRef = storage.child("profileImages/\(profile.email.lowercased()).jpg")
+        imageRef.downloadURL { (url, error) in
+            if error != nil {
+                print((error?.localizedDescription)!)
+                self.loadImageFromStorage(profile: profile)
+            } else {
+            //self.project.picture = "\(url!)"
+            self.db.collection("profiles").document(profile.email).updateData(["picture" : "\(url!)"])
+            }
+            
+
+        }
+
+    }
+    
+    
+    func save(profile: Profile, isUploadImage: Bool) {
+        updateProfile(profile: profile)
+        if isUploadImage {
+            loadImageFromStorage(profile: profile)
+        }
+    }
 }
