@@ -49,8 +49,6 @@ struct InterestCard: View {
     
     func getProfilesAndProjects(interest: String) -> [String] {
         var result: [String] = []
-        self.profilesViewModel.fetchData()
-        self.projectsViewModel.fetchData()
         
         // search in profileData
         for profile in profilesViewModel.profiles {
