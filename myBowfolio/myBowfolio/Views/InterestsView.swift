@@ -14,17 +14,15 @@ struct InterestsView: View {
     @ObservedObject private var projectsViewModel = ProjectsViewModel()
     
     var body: some View {
-        ScrollView {
+
             VStack {
                 
-                ForEach(interests, id: \.self) { interest in
+                List(interests, id: \.self) { interest in
                     InterestCard(interest: interest).padding(.bottom, 40)
-                }
+                }.id(UUID())
             }.frame(maxWidth: .infinity, maxHeight: .infinity)
                 .edgesIgnoringSafeArea(.all)
-            
-
-        }.onAppear() {
+        .onAppear() {
             self.profilesViewModel.fetchData()
             self.projectsViewModel.fetchData()
         }
